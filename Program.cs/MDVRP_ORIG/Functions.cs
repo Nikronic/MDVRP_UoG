@@ -9,7 +9,7 @@ namespace MDVRP_ORIG
     class Functions
     {
         /// <summary>
-        /// Compute the Euclidean distance between to customers to group them to the depots.
+        /// Compute the Euclidean distance between two customers to group them to the depots.
         /// </summary>
         /// <param name="customer">The first customer</param>
         /// <param name="customer2">The second customer</param>
@@ -20,6 +20,22 @@ namespace MDVRP_ORIG
             return distance;
         }
 
-        
+        /// <summary>
+        /// Compute the Euclidean distance between a customers and a depot to group them to the depots.
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <param name="depot"></param>
+        /// <returns></returns>
+        public double EuclideanDistance(Customer customer, Depot depot)
+        {
+            double distance = Math.Sqrt(Math.Pow((customer.X - depot.X), 2) + Math.Pow((customer.Y - depot.Y), 2));
+            return distance;
+        }
+
+
+
+
+
+
     }
 }
