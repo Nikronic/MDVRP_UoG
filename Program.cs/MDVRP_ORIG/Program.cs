@@ -24,10 +24,6 @@ namespace MDVRP_ORIG
             }
         }
 
-            
 
-        }
-
-        static 
     }
 }
