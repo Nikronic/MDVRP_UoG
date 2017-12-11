@@ -10,7 +10,17 @@ namespace MDVRP_ORIG
     {
         static void Main(string[] args)
         {
+            int PopulaitionSize = 10;
+            List<Customer> Input = new List<Customer>();
             
+
+            for (int i = 0; i < PopulaitionSize; i++)
+            {
+
+
+
+
+            }
 
 
 
@@ -18,5 +28,7 @@ namespace MDVRP_ORIG
             
 
         }
+
+        static 
     }
 }
