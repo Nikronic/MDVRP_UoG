@@ -13,21 +13,17 @@ namespace MDVRP_ORIG
             int Depots = 5;
             int PopulaitionSize = 10;
             List<Customer> Input = new List<Customer>();
-            
+
+            Chromosome ch = new Chromosome(Depots);
 
             for (int i = 0; i < PopulaitionSize; i++)
             {
 
 
 
-
             }
-        }
-
             
 
         }
-
-        static 
     }
 }
