@@ -10,7 +10,7 @@ namespace MDVRP_ORIG
     {
         static void Main(string[] args)
         {
-            int kossher = 1;
+            
         }
     }
 }
