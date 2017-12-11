@@ -33,7 +33,18 @@ namespace MDVRP_ORIG
         }
 
 
-
+        public Chromosome SavingMatrices(Chromosome chromosome)
+        {
+            Chromosome UpdatedChromosome = new Chromosome(chromosome.ChromosomeList.Capacity);
+            foreach (var depot in chromosome.ChromosomeList)
+            {
+                foreach (var path in depot)
+                {
+                    
+                }
+            }
+            
+        }
 
 
 
