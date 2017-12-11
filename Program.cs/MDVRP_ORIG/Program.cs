@@ -18,7 +18,7 @@ namespace MDVRP_ORIG
 
             for (int i = 0; i < PopulaitionSize; i++)
             {
-
+                //khkslkdjfls
 
 
             }
