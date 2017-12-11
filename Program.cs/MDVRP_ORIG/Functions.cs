@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace MDVRP_ORIG
 {
-    class Program
+    class Functions
     {
-        static void Main(string[] args)
+        public double EuclideanDistance()
         {
-            
+            return 0;
         }
+
     }
 }
