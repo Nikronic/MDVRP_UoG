@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using static MDVRP_ORIG.Functions;
 namespace MDVRP_ORIG
 {
     class Program
@@ -16,14 +16,14 @@ namespace MDVRP_ORIG
         static void Main(string[] args)
         {
 
-            Chromosome ChromosomeSample = GenerateChromosomeSample();
+            Chromosome ChromosomeSample = GenerateChromosomeSample();           
 
             // copy gereftan az chromosome sample va jaygasht zadan dar an
             for (int i = 0; i < PopulaitionSize; i++)
             {
                 
-
-
+                
+                
             }
             
 
@@ -59,5 +59,6 @@ namespace MDVRP_ORIG
 
 
 
+        
     }
 }

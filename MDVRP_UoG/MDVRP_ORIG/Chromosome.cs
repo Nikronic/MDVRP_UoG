@@ -22,7 +22,7 @@ namespace MDVRP_ORIG
         public Chromosome(int depots)
         {
             ChromosomeList = new List<Depot>(depots);
-
+            
             for (int i = 0; i < depots; i++)
             {
                 ChromosomeList[i] = new Depot();
