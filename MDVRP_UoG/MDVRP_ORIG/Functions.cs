@@ -33,12 +33,19 @@ namespace MDVRP_ORIG
         }
 
 
-        // TODO: این برای چیه علی؟؟؟؟
-        public static List<Customer> Matrix( List<Customer> customerList)
+        public static Depot Routing(double[,] savingMatrices)
         {
-            List<Customer> list = new List<Customer>();
-            // edit list and insert zeros
-            return list;
+            int routesCount = 0;
+            List<List<Customer>> routes = new List<List<Customer>>();
+            for (int c1 = 0; c1 < savingMatrices.Length; c1++)
+            {
+                routes[routesCount] = new List<Customer>();
+                for (int c2 = 0; c2 < savingMatrices.Length; c2++)
+                {
+                    
+                }
+            }
+            return null;
         }
 
 
@@ -46,40 +53,30 @@ namespace MDVRP_ORIG
         /// Based on Saving Matrices in Wright-Clarke algorithm, we find out how many routes(vehicles) needed.
         /// The initialize lists with sequence of customers without assuming any limitation.
         /// </summary>
-        /// <param name="chromosome">The unprocessed chromosome</param>
+        /// <param name="depot"></param>
         /// <returns></returns>
-        public static Chromosome SavingMatrices(Chromosome chromosome)
+        public static Depot SavingMatrices(Depot depot)
         {
-            // A empty chromosome to update
-            Chromosome updatedChromosome = new Chromosome(chromosome.ChromosomeList.Capacity);
-            for (int i = 0; i < chromosome.ChromosomeList.Count; i++)
+            double[,] matrix = new double[depot.Count, depot.Count];
+
+            for (int c1 = 0; c1 < depot.Count; c1++)
             {
-                chromosome.ChromosomeList[i] = new Depot();
+                Customer customer1 = depot[c1];
+                for (int c2 = 0; c2 < depot.Count; c2++)
+                {
+                    Customer customer2 = depot[c2];
+                    if (c1 == c2) { }
+                    else
+                    {
+                        matrix[c1, c2] = EuclideanDistance(customer1, depot) + EuclideanDistance(customer2, depot) -
+                                         EuclideanDistance(customer1, customer2);
+                    }
+                }
             }
 
-            
-            for (int d=0 ;d< chromosome.ChromosomeList.Count;d++)
-            {
-                Depot depot = chromosome.ChromosomeList[d];
-                double[,] matrix = new double[d,d];
 
-                // TODO: Nikan has been changed the "Depot" and "Chromosome" class. So we need to change all of out code based on new changes.
 
-                //for (int c1=0;c1<depot ;c1++)
-                //{
-                //    Customer customer1 = depot[c1];
-                //    for (int c2 = 0; c2 < depot.Count; c2++)
-                //    {
-                //        Customer customer2 = depot[c2];
-                //        if (c1 == c2) {}
-                //        else
-                //        {
-                //            matrix[c1,c2] = EuclideanDistance(customer1,depot)+EuclideanDistance()+
-                //        }
-                //    }
-                //}
-            }
-            return updatedChromosome;
+            return null; //TODO ******
         }
 
 
