@@ -8,8 +8,19 @@ namespace MDVRP_ORIG
 {
     public class Depot
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public int Id { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public int X { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public int Y { get; set; }
     }
 }

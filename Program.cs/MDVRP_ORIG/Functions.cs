@@ -32,9 +32,24 @@ namespace MDVRP_ORIG
             return distance;
         }
 
-        public static void Matrix( List<Customer> CustomerList)
+        public static List<Customer> Matrix( List<Customer> CustomerList)
         {
+            List<Customer> list = new List<Customer>();
             // edit list and insert zeros
+            return list;
+        }
+
+        public static Chromosome SavingMatrices(Chromosome chromosome)
+        {
+            Chromosome UpdatedChromosome = new Chromosome(chromosome.ChromosomeList.Capacity);
+            foreach (var depot in chromosome.ChromosomeList)
+            {
+                foreach (var path in depot)
+                {
+
+                }
+            }
+            return UpdatedChromosome;
         }
 
 

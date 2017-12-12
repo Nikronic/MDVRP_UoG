@@ -51,7 +51,7 @@ namespace MDVRP_ORIG
 
             for (int i = 0; i < ChromosomeSample.ChromosomeList.Count; i++)
             {
-                Functions.Matrix(ChromosomeSample.ChromosomeList[i]);
+                ChromosomeSample.ChromosomeList[i] = Functions.Matrix(ChromosomeSample.ChromosomeList[i]);
             }
 
             return ChromosomeSample;
