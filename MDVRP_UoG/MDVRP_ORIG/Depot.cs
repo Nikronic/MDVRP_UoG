@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MDVRP_ORIG
 {
-    class Depot
+    public class Depot
     {
         /// <summary>
         /// 
