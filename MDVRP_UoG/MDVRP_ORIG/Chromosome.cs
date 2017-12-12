@@ -8,15 +8,24 @@ namespace MDVRP_ORIG
 {
     public class Chromosome
     {
-        public List<List<Customer>> ChromosomeList  { get; set; }
+        /// <summary>
+        /// Chromosome is list of lists.
+        /// The upper level list is depots and the lower level is list of customers for each depot(upper level lists).
+        /// </summary>
+        public List<Depot> ChromosomeList  { get; set; }
         
+
+        /// <summary>
+        /// Constructing empty base list by an input size.
+        /// </summary>
+        /// <param name="depots">The number of depots for initializing base list.</param>
         public Chromosome(int depots)
         {
-            this.ChromosomeList = new List<List<Customer>>(depots);
+            ChromosomeList = new List<Depot>(depots);
 
             for (int i = 0; i < depots; i++)
             {
-                this.ChromosomeList[i] = new List<Customer>();
+                ChromosomeList[i] = new Depot();
             }
         }
                 
