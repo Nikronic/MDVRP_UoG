@@ -55,24 +55,24 @@ namespace MDVRP_ORIG
             return chromosomeSample;
         }
 
-        public static List<Chromosome> GeneratePopulation (int PopulaitionSize , Chromosome chromosomeSample)
+        public static List<Chromosome> GeneratePopulation (int populaitionSize , Chromosome chromosomeSample)
         {
 
             List<Chromosome> population = new List<Chromosome>();
 
             var random = new Random();
-            for (int i = 0; i < PopulaitionSize; i++)
+            for (int i = 0; i < populaitionSize; i++)
             {
                 Chromosome clone = chromosomeSample.Clone();
-                for (int j = 0; j < clone.ChromosomeList.Count; j++)
+                for (int j = 0; j < clone.Count; j++)
                 {
                     Depot temp = new Depot();
-                    temp.Id = clone.ChromosomeList[j].Id;
-                    temp.X = clone.ChromosomeList[j].X;
-                    temp.Y = clone.ChromosomeList[j].Y;
-                    while (clone.ChromosomeList[j].Count == 0)
+                    temp.Id = clone[j].Id;
+                    temp.X = clone[j].X;
+                    temp.Y = clone[j].Y;
+                    while (clone[j].Count == 0)
                     {
-                        int ran = random.Next(clone.ChromosomeList[j].Count);
+                        int ran = random.Next(clone[j].Count);
                         //------nagesh------
                     }
                 }

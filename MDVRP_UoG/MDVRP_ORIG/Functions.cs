@@ -81,16 +81,16 @@ namespace MDVRP_ORIG
 
         public static Chromosome Clone (this Chromosome chromosome)
         {
-            Chromosome clone = new Chromosome(chromosome.ChromosomeList.Count);
-            for (int i = 0; i < chromosome.ChromosomeList.Count; i++)
+            Chromosome clone = new Chromosome(chromosome.Count);
+            for (int i = 0; i < chromosome.Count; i++)
             {
-                clone.ChromosomeList[i].Id = chromosome.ChromosomeList[i].Id;
-                clone.ChromosomeList[i].X = chromosome.ChromosomeList[i].X;
-                clone.ChromosomeList[i].Y = chromosome.ChromosomeList[i].Y;
+                clone[i].Id = chromosome[i].Id;
+                clone[i].X = chromosome[i].X;
+                clone[i].Y = chromosome[i].Y;
 
-                for (int j = 0; j < chromosome.ChromosomeList[i].Count; j++)
+                for (int j = 0; j < chromosome[i].Count; j++)
                 {
-                    clone.ChromosomeList[i].Add(chromosome.ChromosomeList[i][j]);
+                    clone[i].Add(chromosome[i][j]);
                 }
             }
             return clone;
