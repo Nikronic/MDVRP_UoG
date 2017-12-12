@@ -82,7 +82,7 @@ namespace MDVRP_ORIG
             return updatedChromosome;
         }
 
-        public static Chromosome CloneChromosome (Chromosome chromosome)
+        public static Chromosome Clone (this Chromosome chromosome)
         {
             Chromosome clone = new Chromosome(chromosome.ChromosomeList.Count);
             for (int i = 0; i < chromosome.ChromosomeList.Count; i++)
@@ -93,11 +93,11 @@ namespace MDVRP_ORIG
 
                 for (int j = 0; j < chromosome.ChromosomeList[i].Count; j++)
                 {
-                    clone.ChromosomeList[i][j]
+                    clone.ChromosomeList[i].Add(chromosome.ChromosomeList[i][j]);
                 }
             }
             return clone;
         }
-        w
+        
     }
 }
