@@ -14,7 +14,7 @@ namespace MDVRP_ORIG
         /// <param name="customer">The first customer</param>
         /// <param name="customer2">The second customer</param>
         /// <returns></returns>
-        public static double EuclideanDistance(this Customer customer, Customer customer2)
+        public static double EuclideanDistance(Customer customer, Customer customer2)
         {
             double distance = Math.Sqrt(Math.Pow((customer.X - customer2.X), 2) + Math.Pow((customer.Y - customer2.Y), 2));
             return distance;

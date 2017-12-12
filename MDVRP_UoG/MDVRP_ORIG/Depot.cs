@@ -44,11 +44,6 @@ namespace MDVRP_ORIG
         public List<Customer> DepotCustomers { get; set; }
 
 
- //       /// <summary>
- //       /// Each Depot contains some routes and each route is list of customers.
- //       /// </summary>
- //       public List<List<Customer>> DepotRoutes { get; set; }
-
         public int Count => DepotCustomers.Count;
 
         public bool IsReadOnly => false;

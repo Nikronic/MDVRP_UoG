@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static MDVRP_ORIG.Functions;
+
 
 
 namespace MDVRP_ORIG
@@ -17,9 +17,9 @@ namespace MDVRP_ORIG
             List<Customer> customer = new List<Customer>();//input
             List<Depot> depot = new List<Depot>();//input
 
-            Chromosome ChromosomeSample = GenerateChromosomeSample(depot,customer);
+            Chromosome chromosomeSample = GenerateChromosomeSample(depot,customer);
 
-            List<Chromosome> population = GeneratePopulation(populaitionSize, ChromosomeSample);
+            List<Chromosome> population = GeneratePopulation(populaitionSize, chromosomeSample);
 
             
 
@@ -28,7 +28,7 @@ namespace MDVRP_ORIG
 
         public static Chromosome GenerateChromosomeSample(List<Depot> depot , List<Customer> customer)
         {
-            Chromosome ChromosomeSample = new Chromosome(depot.Count);
+            Chromosome chromosomeSample = new Chromosome(depot.Count);
             
             for (int i = 0; i < customer.Count; i++)
             {
@@ -43,16 +43,16 @@ namespace MDVRP_ORIG
                         k = j;
                     }
                 }
-                ChromosomeSample.ChromosomeList[k].Add(customer[i]);
+                chromosomeSample.ChromosomeList[k].Add(customer[i]);
             }
 
-            for (int i = 0; i < ChromosomeSample.ChromosomeList.Count; i++)
+            for (int i = 0; i < chromosomeSample.ChromosomeList.Count; i++)
             {
 
 //                ChromosomeSample.ChromosomeList[i] = Functions.Matrix(ChromosomeSample.ChromosomeList[i]);
             }
 
-            return ChromosomeSample;
+            return chromosomeSample;
         }
 
         public static List<Chromosome> GeneratePopulation (int PopulaitionSize , Chromosome chromosomeSample)
