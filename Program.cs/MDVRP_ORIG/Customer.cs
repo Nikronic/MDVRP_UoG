@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MDVRP_ORIG
 {
-    class Customer
+    public class Customer
     {
         public int Id { get; set; }
         public int X { get; set; }

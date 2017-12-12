@@ -6,16 +6,19 @@ using System.Threading.Tasks;
 
 namespace MDVRP_ORIG
 {
-    class Chromosome
+    public class Chromosome
     {
-        public List<List<int>> ChromosomeList  { get; set; }
+        public List<List<Customer>> ChromosomeList  { get; set; }
         
         public Chromosome(int depots)
         {
-            ChromosomeList = new List<List<int>>(depots);
+            this.ChromosomeList = new List<List<Customer>>(depots);
+
+            for (int i = 0; i < depots; i++)
+            {
+                this.ChromosomeList[i] = new List<Customer>();
+            }
         }
-
-
-        
+                
     }
 }
