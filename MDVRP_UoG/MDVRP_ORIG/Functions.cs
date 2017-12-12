@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MDVRP_ORIG
 {
-    public class Functions
+    public static class Functions
     {
         /// <summary>
         /// Compute the Euclidean distance between two customers to group them to the depots.
@@ -14,7 +14,7 @@ namespace MDVRP_ORIG
         /// <param name="customer">The first customer</param>
         /// <param name="customer2">The second customer</param>
         /// <returns></returns>
-        public static double EuclideanDistance(Customer customer, Customer customer2)
+        public static double EuclideanDistance(this Customer customer, Customer customer2)
         {
             double distance = Math.Sqrt(Math.Pow((customer.X - customer2.X), 2) + Math.Pow((customer.Y - customer2.Y), 2));
             return distance;
@@ -79,6 +79,22 @@ namespace MDVRP_ORIG
             return null; //TODO ******
         }
 
+        public static Chromosome Clone (this Chromosome chromosome)
+        {
+            Chromosome clone = new Chromosome(chromosome.ChromosomeList.Count);
+            for (int i = 0; i < chromosome.ChromosomeList.Count; i++)
+            {
+                clone.ChromosomeList[i].Id = chromosome.ChromosomeList[i].Id;
+                clone.ChromosomeList[i].X = chromosome.ChromosomeList[i].X;
+                clone.ChromosomeList[i].Y = chromosome.ChromosomeList[i].Y;
 
+                for (int j = 0; j < chromosome.ChromosomeList[i].Count; j++)
+                {
+                    clone.ChromosomeList[i].Add(chromosome.ChromosomeList[i][j]);
+                }
+            }
+            return clone;
+        }
+        
     }
 }

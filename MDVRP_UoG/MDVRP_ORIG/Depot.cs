@@ -10,7 +10,18 @@ namespace MDVRP_ORIG
 {
     public class Depot :IList<Customer>
     {
-        public Customer this[int index] { get => DepotCustomers[index]; set => DepotCustomers[index] = value; }
+        public Customer this[int index] {
+            get
+            {
+               return  DepotCustomers[index];
+            }
+            set
+            {
+                DepotCustomers[index] = value;
+            }
+        }
+
+
 
         /// <summary>
         /// The ID for depots
@@ -33,10 +44,10 @@ namespace MDVRP_ORIG
         public List<Customer> DepotCustomers { get; set; }
 
 
-        /// <summary>
-        /// Each Depot contains some routes and each route is list of customers.
-        /// </summary>
-        public List<List<Customer>> DepotRoutes { get; set; }
+ //       /// <summary>
+ //       /// Each Depot contains some routes and each route is list of customers.
+ //       /// </summary>
+ //       public List<List<Customer>> DepotRoutes { get; set; }
 
         public int Count => DepotCustomers.Count;
 
