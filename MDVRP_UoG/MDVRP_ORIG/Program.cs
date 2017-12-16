@@ -14,71 +14,60 @@ namespace MDVRP_ORIG
         static void Main(string[] args)
         {
             int populaitionSize = 10; //input
+            int capacity = 10; //input
             List<Customer> customer = new List<Customer>();//input
             List<Depot> depot = new List<Depot>();//input
 
-            Chromosome chromosomeSample = GenerateChromosomeSample(depot,customer);
+            Chromosome chromosomeSample = GenerateChromosomeSample(depot,customer,capacity);
 
             List<Chromosome> population = GeneratePopulation(populaitionSize, chromosomeSample);
-
             
-
-
+            //tornoment
+            //crossover
+                       
         }
 
-        public static Chromosome GenerateChromosomeSample(List<Depot> depot , List<Customer> customer)
+        public static Chromosome GenerateChromosomeSample(List<Depot> depot , List<Customer> customer , int capacity)
         {
-            Chromosome chromosomeSample = new Chromosome(depot.Count);
-            
+            Chromosome chromosomeSample = new Chromosome(depot.Count,capacity);
+            for (int i = 0; i < depot.Count; i++)
+            {
+                chromosomeSample[i].Id = depot[i].Id;
+                chromosomeSample[i].X = depot[i].X;
+                chromosomeSample[i].Y = depot[i].Y;
+                chromosomeSample[i].Capacity = depot[i].Capacity;
+            }
             for (int i = 0; i < customer.Count; i++)
             {
-                double min = Functions.EuclideanDistance(customer[i], depot[0]); ;
+                double min = Functions.EuclideanDistance(customer[i], chromosomeSample[0]); ;
                 int k = 0;
-                for (int j = 1; j < depot.Count; j++)
+                for (int j = 1; j < chromosomeSample.Count; j++)
                 {
-                    double temp = Functions.EuclideanDistance(customer[i], depot[j]);
+                    double temp = Functions.EuclideanDistance(customer[i], chromosomeSample[j]);
                     if (min > temp)
                     {
                         min = temp;
                         k = j;
                     }
                 }
-                chromosomeSample.ChromosomeList[k].Add(customer[i]);
+                chromosomeSample[k].Add(customer[i]);
             }
-
-            for (int i = 0; i < chromosomeSample.ChromosomeList.Count; i++)
-            {
-
-//                ChromosomeSample.ChromosomeList[i] = Functions.Matrix(ChromosomeSample.ChromosomeList[i]);
-            }
-
             return chromosomeSample;
         }
 
         public static List<Chromosome> GeneratePopulation (int populaitionSize , Chromosome chromosomeSample)
         {
-
             List<Chromosome> population = new List<Chromosome>();
-
-            var random = new Random();
             for (int i = 0; i < populaitionSize; i++)
             {
                 Chromosome clone = chromosomeSample.Clone();
                 for (int j = 0; j < clone.Count; j++)
                 {
-                    Depot temp = new Depot();
-                    temp.Id = clone[j].Id;
-                    temp.X = clone[j].X;
-                    temp.Y = clone[j].Y;
-                    while (clone[j].Count == 0)
-                    {
-                        int ran = random.Next(clone[j].Count);
-                        //------nagesh------
-                    }
+                    clone[j].RandomList();
+                    clone[j].Routing();
                 }
-                int x = random.Next();
+                population.Add(clone);
             }
-
             return population;
         }
 

@@ -12,6 +12,7 @@ namespace MDVRP_ORIG
         /// The ID for each customer
         /// </summary>
         public int Id { get; set; }
+
         /// <summary>
         /// X coordinate of customer
         /// </summary>
@@ -29,5 +30,8 @@ namespace MDVRP_ORIG
         ///     because every vehicle(rout) has a weight limit.
         /// </summary>
         public int Cost { get; set; }
+
+        public bool IsNull { get; set; } = false;
+
     }
 }

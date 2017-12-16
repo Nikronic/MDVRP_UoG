@@ -21,8 +21,6 @@ namespace MDVRP_ORIG
             }
         }
 
-
-
         /// <summary>
         /// The ID for depots
         /// </summary>
@@ -38,11 +36,12 @@ namespace MDVRP_ORIG
         /// </summary>
         public int Y { get; set; }
 
+        public int Capacity { get; set; }
+
         /// <summary>
         /// Each depot has list of customers
         /// </summary>
         public List<Customer> DepotCustomers { get; set; }
-
 
         public int Count => DepotCustomers.Count;
 

@@ -8,6 +8,7 @@ namespace MDVRP_ORIG
 {
     public static class Functions
     {
+
         /// <summary>
         /// Compute the Euclidean distance between two customers to group them to the depots.
         /// </summary>
@@ -32,61 +33,49 @@ namespace MDVRP_ORIG
             return distance;
         }
 
-
-        public static Depot Routing(double[,] savingMatrices)
-        {
-            int routesCount = 0;
-            List<List<Customer>> routes = new List<List<Customer>>();
-            for (int c1 = 0; c1 < savingMatrices.Length; c1++)
-            {
-                routes[routesCount] = new List<Customer>();
-                for (int c2 = 0; c2 < savingMatrices.Length; c2++)
-                {
-                    
-                }
-            }
-            return null;
-        }
-
-
         /// <summary>
         /// Based on Saving Matrices in Wright-Clarke algorithm, we find out how many routes(vehicles) needed.
         /// The initialize lists with sequence of customers without assuming any limitation.
         /// </summary>
         /// <param name="depot"></param>
         /// <returns></returns>
-        public static Depot SavingMatrices(Depot depot)
+        public static void Routing(this Depot depot)
         {
-            double[,] matrix = new double[depot.Count, depot.Count];
-
-            for (int c1 = 0; c1 < depot.Count; c1++)
-            {
-                Customer customer1 = depot[c1];
-                for (int c2 = 0; c2 < depot.Count; c2++)
+            int weight = 0;
+            Customer nullCustomer = new Customer();
+            for (int i = 0; i < depot.Count; i++)
+            {               
+                if (weight + depot[i].Cost > depot.Capacity)
                 {
-                    Customer customer2 = depot[c2];
-                    if (c1 == c2) { }
-                    else
-                    {
-                        matrix[c1, c2] = EuclideanDistance(customer1, depot) + EuclideanDistance(customer2, depot) -
-                                         EuclideanDistance(customer1, customer2);
-                    }
+                    depot.Insert(i, nullCustomer);
+                    weight = 0;
                 }
+                weight += depot[i].Cost;
             }
+            depot.Add(nullCustomer);
+        }
 
-
-
-            return null; //TODO ******
+        public static void RandomList(this Depot depot)
+        {
+            var random = new Random();
+            for (int i = 0; i < depot.Count; i++)
+            {
+                int ran = random.Next(i-1,depot.Count);
+                Customer temp = depot[i];
+                depot[i] = depot[ran];
+                depot[ran] = temp;
+            }
         }
 
         public static Chromosome Clone (this Chromosome chromosome)
         {
-            Chromosome clone = new Chromosome(chromosome.Count);
+            Chromosome clone = new Chromosome(chromosome.Count,chromosome[0].Capacity);
             for (int i = 0; i < chromosome.Count; i++)
             {
                 clone[i].Id = chromosome[i].Id;
                 clone[i].X = chromosome[i].X;
                 clone[i].Y = chromosome[i].Y;
+                clone[i].Capacity = chromosome[i].Capacity;
 
                 for (int j = 0; j < chromosome[i].Count; j++)
                 {
@@ -95,6 +84,6 @@ namespace MDVRP_ORIG
             }
             return clone;
         }
-        
+       
     }
 }

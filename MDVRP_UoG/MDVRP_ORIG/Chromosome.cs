@@ -14,19 +14,19 @@ namespace MDVRP_ORIG
         /// The upper level list is depots and the lower level is list of customers for each depot(upper level lists).
         /// </summary>
         public List<Depot> ChromosomeList  { get; set; }
-
-        
+       
         /// <summary>
         /// Constructing empty base list by an input size.
         /// </summary>
         /// <param name="depots">The number of depots for initializing base list.</param>
-        public Chromosome(int depots)
+        public Chromosome(int depots ,int capacity)
         {
             ChromosomeList = new List<Depot>(depots);
             
             for (int i = 0; i < depots; i++)
             {
                 ChromosomeList[i] = new Depot();
+                ChromosomeList[i].Capacity = capacity;
             }
         }
 
@@ -35,8 +35,6 @@ namespace MDVRP_ORIG
         public bool IsReadOnly => false;
 
         public Depot this[int index] { get { return ChromosomeList[index]; } set { ChromosomeList[index] = value; } }
-
-
 
         public int IndexOf(Depot item)
         {
