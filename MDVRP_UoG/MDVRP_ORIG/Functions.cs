@@ -34,8 +34,7 @@ namespace MDVRP_ORIG
         }
 
         /// <summary>
-        /// Based on Saving Matrices in Wright-Clarke algorithm, we find out how many routes(vehicles) needed.
-        /// The initialize lists with sequence of customers without assuming any limitation.
+        /// Sequentially insert customers to routes until we reach weight limitation.
         /// </summary>
         /// <param name="depot"></param>
         /// <returns></returns>
@@ -48,6 +47,10 @@ namespace MDVRP_ORIG
                 if (weight + depot[i].Cost > depot.Capacity)
                 {
                     depot.Insert(i, nullCustomer);
+                    nullCustomer.IsNull = true;
+                    nullCustomer.X = depot[i].X;
+                    nullCustomer.Y = depot[i].Y;
+                    nullCustomer.Id = depot[i].Id;
                     weight = 0;
                 }
                 weight += depot[i].Cost;
@@ -55,6 +58,10 @@ namespace MDVRP_ORIG
             depot.Add(nullCustomer);
         }
 
+        /// <summary>
+        /// For building initial population, we build random chromosomes.
+        /// </summary>
+        /// <param name="depot">Depot</param>
         public static void RandomList(this Depot depot)
         {
             var random = new Random();
@@ -67,6 +74,11 @@ namespace MDVRP_ORIG
             }
         }
 
+        /// <summary>
+        /// Out initial population contains chromosomes with same genes. So clone them by first chromosome.
+        /// </summary>
+        /// <param name="chromosome">First chromosome</param>
+        /// <returns></returns>
         public static Chromosome Clone (this Chromosome chromosome)
         {
             Chromosome clone = new Chromosome(chromosome.Count,chromosome[0].Capacity);
@@ -84,6 +96,12 @@ namespace MDVRP_ORIG
             }
             return clone;
         }
-       
+
+
+        public static List<Chromosome> Tournament(List<Chromosome> population)
+        {
+
+            return null;
+        }
     }
 }

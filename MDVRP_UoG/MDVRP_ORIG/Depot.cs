@@ -13,7 +13,7 @@ namespace MDVRP_ORIG
         public Customer this[int index] {
             get
             {
-               return  DepotCustomers[index];
+               return DepotCustomers[index];
             }
             set
             {
@@ -42,6 +42,7 @@ namespace MDVRP_ORIG
         /// Each depot has list of customers
         /// </summary>
         public List<Customer> DepotCustomers { get; set; }
+
 
         public int Count => DepotCustomers.Count;
 
