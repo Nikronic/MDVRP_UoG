@@ -32,6 +32,8 @@ namespace MDVRP_ORIG
 
         public int Count => ChromosomeList.Count;
 
+        public double Fitness { get; set; }
+
         public bool IsReadOnly => false;
 
         public Depot this[int index] { get { return ChromosomeList[index]; } set { ChromosomeList[index] = value; } }

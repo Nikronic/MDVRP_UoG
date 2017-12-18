@@ -21,9 +21,8 @@ namespace MDVRP_ORIG
             Chromosome chromosomeSample = GenerateChromosomeSample(depot,customer,capacity);
 
             List<Chromosome> population = GeneratePopulation(populaitionSize, chromosomeSample);
-            
-            //tornoment
-            //crossover
+
+            calculationFitness(population);
                        
         }
 
@@ -71,6 +70,26 @@ namespace MDVRP_ORIG
             return population;
         }
 
+        public static void calculationFitness (List<Chromosome> populaitionList)
+        {
+            for (int k = 0; k < populaitionList.Count; k++)
+            {
+                double distance = 0;
+                double route = 0;
+                for (int i = 0; i < populaitionList.Count; i++)
+                {
+                    for (int j = 0; j < populaitionList[k][i].Count - 1; j++)
+                    {
+                        if (populaitionList[k][i][j].IsNull == true)
+                        {
+                            route = route + 1;
+                        }
+                        distance += Functions.EuclideanDistance(populaitionList[k][i][j], populaitionList[k][i][j + 1]);
+                    }
+                }
+                populaitionList[k].Fitness = ((100 * route) + ((1 / 1000) * distance));
+            }
+        }
 
     }
 }
