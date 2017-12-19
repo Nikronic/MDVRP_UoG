@@ -23,7 +23,7 @@ namespace MDVRP_ORIG
             List<Chromosome> population = GeneratePopulation(populaitionSize, chromosomeSample);
 
             CalculationFitness(population);
-                       
+
         }
 
         public static Chromosome GenerateChromosomeSample(List<Depot> depot , List<Customer> customer , int capacity)
@@ -91,5 +91,22 @@ namespace MDVRP_ORIG
             }
         }
 
+        public static List<Chromosome> GenerateNewPopulation (List<Chromosome> population)
+        {
+            List<Chromosome> newPop = new List<Chromosome>();
+            // add best
+            while (newPop.Count < population.Count)
+            {
+                List<Chromosome> temp = Functions.CrossOver(Functions.Tournament(population, population.Count);
+                newPop.Add(temp[0]);
+                newPop.Add(temp[1]);
+            }
+            if (newPop.Count > population.Count)
+            {
+                newPop.RemoveAt(newPop.Count - 1);
+            }
+            return newPop;
+        }
+        
     }
 }

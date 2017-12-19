@@ -184,5 +184,84 @@ namespace MDVRP_ORIG
             }
             return fittest;
         }
+
+        public static List<Chromosome> CrossOver(List<Chromosome> parent)
+        {
+            Chromosome parent1 = parent[0].Clone();
+            Chromosome parent2 = parent[1].Clone();
+            List<Customer> randomRoute1 = RandomRoute(parent1);
+            List<Customer> randomRoute2 = RandomRoute(parent2);
+            DeletingRoute(randomRoute1, parent2);
+            DeletingRoute(randomRoute2, parent1);
+            Insert(randomRoute1, parent2);
+            Insert(randomRoute2, parent1);
+
+            List<Chromosome> result = new List<Chromosome>();
+            result.Add(parent1);
+            result.Add(parent2);
+            return result;
+        }
+
+        private static List<Customer> RandomRoute(Chromosome chromosome)
+        {
+            List<Customer> deletedRoute = new List<Customer>;
+            Random random = new Random();
+            int d = random.Next(chromosome.Count + 1);
+            int r = random.Next(chromosome[d].Count);
+
+            int i;
+            if (chromosome[d][r].IsNull == false)
+            {
+                i = r;
+                while (chromosome[d][i].IsNull == false)
+                {
+                    deletedRoute.Add(chromosome[d][i]);
+                    i++;
+                }
+                i = r - 1;
+                while (chromosome[d][i].IsNull == false)
+                {
+                    deletedRoute.Add(chromosome[d][i]);
+                    i--;
+                }
+            }
+            else
+            {
+                i = r + 1;
+                while (chromosome[d][i].IsNull == false)
+                {
+                    deletedRoute.Add(chromosome[d][i]);
+                    i++;
+                }
+            }
+            return deletedRoute;
+        }
+
+        private static void DeletingRoute(List<Customer> route, Chromosome chromosome)
+        {
+            for (int i = 0; i < chromosome.Count; i++)
+            {
+                for (int j = 1; j < chromosome[i].Count - 1; j++)
+                {
+                    for (int k = 0; k < route.Count; k++)
+                    {
+                        if (chromosome[i][j] == route[k])
+                        {
+                            chromosome[i].RemoveAt(j);
+                            if (chromosome[i][j].IsNull == true && chromosome[i][j - 1].IsNull == true)
+                            {
+                                chromosome[i].RemoveAt(j);
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        private static void Insert(List<Customer> route, Chromosome chromosome)
+        {
+
+        }
     }
 }
