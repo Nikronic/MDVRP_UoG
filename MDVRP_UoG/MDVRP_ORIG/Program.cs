@@ -15,6 +15,7 @@ namespace MDVRP_ORIG
         {
             int populaitionSize = 10; //input
             int capacity = 10; //input
+            int n = 100;
             List<Customer> customer = new List<Customer>();//input
             List<Depot> depot = new List<Depot>();//input
 
@@ -23,6 +24,13 @@ namespace MDVRP_ORIG
             List<Chromosome> population = GeneratePopulation(populaitionSize, chromosomeSample);
 
             CalculationFitness(population);
+
+            for (int i = 0; i < n; i++)
+            {
+                population = GenerateNewPopulation(population);
+                //jahesh
+                CalculationFitness(population);
+            }
 
         }
 
@@ -107,7 +115,7 @@ namespace MDVRP_ORIG
             newPop.Add(population[index]);
             while (newPop.Count < population.Count)
             {
-                List<Chromosome> temp = Functions.CrossOver(Functions.Tournament(population, population.Count);
+                List<Chromosome> temp = Functions.CrossOver(Functions.Tournament(population, population.Count));
                 newPop.Add(temp[0]);
                 newPop.Add(temp[1]);
             }

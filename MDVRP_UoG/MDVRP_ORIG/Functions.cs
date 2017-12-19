@@ -193,9 +193,14 @@ namespace MDVRP_ORIG
             List<Customer> randomRoute2 = RandomRoute(parent2);
             DeletingRoute(randomRoute1, parent2);
             DeletingRoute(randomRoute2, parent1);
- //           Insert(randomRoute1, parent2);
-//            Insert(randomRoute2, parent1);
-
+            for (int i = 0; i < randomRoute1.Count; i++)
+            {
+                Insert(randomRoute1[i], parent2);
+            }
+            for (int i = 0; i < randomRoute2.Count; i++)
+            {
+                Insert(randomRoute2[i], parent1);
+            }
             List<Chromosome> result = new List<Chromosome>();
             result.Add(parent1);
             result.Add(parent2);
@@ -204,7 +209,7 @@ namespace MDVRP_ORIG
 
         private static List<Customer> RandomRoute(Chromosome chromosome)
         {
-            List<Customer> deletedRoute = new List<Customer>;
+            List<Customer> deletedRoute = new List<Customer>();
             Random random = new Random();
             int d = random.Next(chromosome.Count + 1);
             int r = random.Next(chromosome[d].Count);
@@ -272,11 +277,63 @@ namespace MDVRP_ORIG
                     index = i;
                 }
             }
-            int index2 = 0;
-            
-            // insertion cost
+            List<double> distance = new List<double>();
+            List<int> customerCost = new List<int>();
+            int k = -1;
+            for (int i = 0; i < chromosome[index].Count-1; i++)
+            {
+                if (chromosome[index][i].IsNull == true)
+                {
+                    customerCost.Add(0);
+                    distance.Add(0);
+                    k++;
+                }
+                customerCost[k] += chromosome[index][i].Cost;
+                distance[k] += EuclideanDistance(chromosome[index][i], chromosome[index][i + 1]);
+            }
 
-            chromosome[index].Insert(index2, customer);
+            k = -1;
+            int index2 = -1;
+            min = -1;
+            for (int i = 0; i < chromosome[index].Count-1; i++)
+            {
+                if (chromosome[index][i].IsNull == true)
+                {
+                    k++;
+                }
+                if ( customerCost[k] + customer.Cost < chromosome[index].Capacity)
+                {
+                    double t1 = EuclideanDistance(chromosome[index][i], chromosome[index][i + 1]);
+                    double t2 = EuclideanDistance(chromosome[index][i], customer) + EuclideanDistance(customer, chromosome[index][i + 1]);
+                    double t3 = distance[k] - t1 + t2;
+                    if (min == -1)
+                    {
+                        min = t3;
+                        index2 = i;
+                    }
+                    else if (min > t3)
+                    {
+                        min = t3;
+                        index2 = i;
+                    }
+                }
+            }
+
+            if (index2 == -1)
+            {
+                Customer nullCustomer = new Customer();
+                nullCustomer.IsNull = true;
+                nullCustomer.X = chromosome[index].X;
+                nullCustomer.Y = chromosome[index].Y;
+                nullCustomer.Id = chromosome[index].Id;
+                chromosome[index].Add(customer);
+                chromosome[index].Add(nullCustomer);
+            }
+            else
+            {
+                chromosome[index2].Insert(index2 + 1, customer);
+            }
+
         }
         
 

@@ -29,7 +29,7 @@ namespace MDVRP_ORIG
         /// In this implementation, we assume it as "weight".
         ///     because every vehicle(rout) has a weight limit.
         /// </summary>
-        public int Cost { get; set; }
+        public int Cost { get; set; } = 0;
 
         public bool IsNull { get; set; } = false;
 
