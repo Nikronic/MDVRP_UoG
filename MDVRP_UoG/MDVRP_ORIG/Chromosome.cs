@@ -32,6 +32,9 @@ namespace MDVRP_ORIG
 
         public int Count => ChromosomeList.Count;
 
+        /// <summary>
+        /// The fitness of each individual.
+        /// </summary>
         public double Fitness { get; set; }
 
         public bool IsReadOnly => false;

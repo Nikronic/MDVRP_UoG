@@ -36,6 +36,9 @@ namespace MDVRP_ORIG
         /// </summary>
         public int Y { get; set; }
 
+        /// <summary>
+        /// Capacity of each depot
+        /// </summary>
         public int Capacity { get; set; }
 
         /// <summary>
@@ -43,7 +46,9 @@ namespace MDVRP_ORIG
         /// </summary>
         public List<Customer> DepotCustomers { get; set; }
 
-
+        /// <summary>
+        /// Number of customers
+        /// </summary>
         public int Count => DepotCustomers.Count;
 
         public bool IsReadOnly => false;

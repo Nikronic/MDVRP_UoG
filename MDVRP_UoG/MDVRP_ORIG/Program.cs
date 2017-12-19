@@ -70,7 +70,7 @@ namespace MDVRP_ORIG
             return population;
         }
 
-        public static void calculationFitness (List<Chromosome> populaitionList)
+        public static void CalculationFitness (List<Chromosome> populaitionList)
         {
             for (int k = 0; k < populaitionList.Count; k++)
             {
@@ -87,7 +87,7 @@ namespace MDVRP_ORIG
                         distance += Functions.EuclideanDistance(populaitionList[k][i][j], populaitionList[k][i][j + 1]);
                     }
                 }
-                populaitionList[k].Fitness = ((100 * route) + ((1 / 1000) * distance));
+                populaitionList[k].Fitness = ((100 * route) + ((0.001f) * distance));
             }
         }
 

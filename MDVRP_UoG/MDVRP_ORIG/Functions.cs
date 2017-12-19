@@ -99,7 +99,12 @@ namespace MDVRP_ORIG
             return clone;
         }
 
-
+        /// <summary>
+        /// Returns parents to crossover on them
+        /// </summary>
+        /// <param name="population">The population (all chromosomes)</param>
+        /// <param name="populationSize">Size of each tournament set</param>
+        /// <returns>Two chromosomes as parent to crossover</returns>
         public static List<Chromosome> Tournament(List<Chromosome> population,int populationSize)
         {
             List<Chromosome> tournamentOutput = new List<Chromosome>();
