@@ -94,7 +94,17 @@ namespace MDVRP_ORIG
         public static List<Chromosome> GenerateNewPopulation (List<Chromosome> population)
         {
             List<Chromosome> newPop = new List<Chromosome>();
-            // add best
+            double min = population[0].Fitness;
+            int index = 0;
+            for (int j = 0; j < population.Count; j++)
+            {
+                if (population[j].Fitness < min)
+                {
+                    min = population[j].Fitness;
+                    index = j;
+                }
+            }
+            newPop.Add(population[index]);
             while (newPop.Count < population.Count)
             {
                 List<Chromosome> temp = Functions.CrossOver(Functions.Tournament(population, population.Count);

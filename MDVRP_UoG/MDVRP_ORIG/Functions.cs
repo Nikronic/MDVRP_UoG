@@ -193,8 +193,8 @@ namespace MDVRP_ORIG
             List<Customer> randomRoute2 = RandomRoute(parent2);
             DeletingRoute(randomRoute1, parent2);
             DeletingRoute(randomRoute2, parent1);
-            Insert(randomRoute1, parent2);
-            Insert(randomRoute2, parent1);
+ //           Insert(randomRoute1, parent2);
+//            Insert(randomRoute2, parent1);
 
             List<Chromosome> result = new List<Chromosome>();
             result.Add(parent1);
@@ -259,9 +259,26 @@ namespace MDVRP_ORIG
             }
         }
 
-        private static void Insert(List<Customer> route, Chromosome chromosome)
+        private static void Insert(Customer customer, Chromosome chromosome)
         {
+            double min = EuclideanDistance(customer, chromosome[0]);
+            int index = 0;
+            for (int i = 1; i < chromosome.Count; i++)
+            {
+                double temp = EuclideanDistance(customer, chromosome[i]);
+                if (temp < min)
+                {
+                    min = temp;
+                    index = i;
+                }
+            }
+            int index2 = 0;
+            
+            // insertion cost
 
+            chromosome[index].Insert(index2, customer);
         }
+        
+
     }
 }
