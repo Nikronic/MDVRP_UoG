@@ -22,7 +22,7 @@ namespace MDVRP_ORIG
 
             List<Chromosome> population = GeneratePopulation(populaitionSize, chromosomeSample);
 
-            calculationFitness(population);
+            CalculationFitness(population);
                        
         }
 
