@@ -137,7 +137,6 @@ namespace MDVRP_ORIG
                 // output to crossover
                 tournamentOutput.Add(firstChromosome);
                 tournamentOutput.Add(secondChromosome);
-
             }
             return tournamentOutput;
         }
