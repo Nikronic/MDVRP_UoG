@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.ExceptionServices;
+using System.Threading;
+
+
+// ReSharper disable InvertIf
 
 namespace MDVRP_ORIG
 {
@@ -131,13 +131,14 @@ namespace MDVRP_ORIG
             }
             else
             {
+                // typically we are selecting both chromosomes in tournament set (binary tournament)
                 int randomChromosome = random.Next(0, tournamentSet.Count);
                 Chromosome firstChromosome = new Chromosome(-1,-1);
                 firstChromosome = tournamentSet[randomChromosome];
 
                 int randomChromosome2 = random.Next(0, tournamentSet.Count);
                 Chromosome secondChromosome = new Chromosome(-1, -1);
-                secondChromosome = tournamentSet[randomChromosome];
+                secondChromosome = tournamentSet[randomChromosome2];
 
                 // output to crossover
                 tournamentOutput.Add(firstChromosome);
@@ -148,6 +149,7 @@ namespace MDVRP_ORIG
 
         /// <summary>
         /// We get a tournament set of chromosomes to select the fittest.
+        /// As we sue binary tournament, size of tournament population is 2 (k = 2)
         /// </summary>
         /// <param name="k">Size of each tournament set</param>
         /// <param name="population">Tournament set</param>
@@ -185,6 +187,11 @@ namespace MDVRP_ORIG
             return fittest;
         }
 
+        /// <summary>
+        /// Crossover on parent were selected by tournament method
+        /// </summary>
+        /// <param name="parent">A list of two parent to crossover</param>
+        /// <returns>Two eligible childes</returns>
         public static List<Chromosome> CrossOver(List<Chromosome> parent)
         {
             Chromosome parent1 = parent[0].Clone();
@@ -207,6 +214,11 @@ namespace MDVRP_ORIG
             return result;
         }
 
+        /// <summary>
+        /// Selecting a random route in each parent (part of crossover)
+        /// </summary>
+        /// <param name="chromosome">The parent chromosome</param>
+        /// <returns></returns>
         private static List<Customer> RandomRoute(Chromosome chromosome)
         {
             List<Customer> deletedRoute = new List<Customer>();
@@ -242,6 +254,11 @@ namespace MDVRP_ORIG
             return deletedRoute;
         }
 
+        /// <summary>
+        /// Deleting randomly selected route. The deleted customers will be added in better place (part of crossover)
+        /// </summary>
+        /// <param name="route">The randomly selected route in parent chromosome</param>
+        /// <param name="chromosome">The parent chromosome</param>
         private static void DeletingRoute(List<Customer> route, Chromosome chromosome)
         {
             for (int i = 0; i < chromosome.Count; i++)
@@ -253,7 +270,7 @@ namespace MDVRP_ORIG
                         if (chromosome[i][j] == route[k])
                         {
                             chromosome[i].RemoveAt(j);
-                            if (chromosome[i][j].IsNull == true && chromosome[i][j - 1].IsNull == true)
+                            if (chromosome[i][j].IsNull && chromosome[i][j - 1].IsNull)
                             {
                                 chromosome[i].RemoveAt(j);
                             }
@@ -264,6 +281,11 @@ namespace MDVRP_ORIG
             }
         }
 
+        /// <summary>
+        /// After deleting all customers from randomly selected route, we add them in better place (part of crossover)
+        /// </summary>
+        /// <param name="customer">Removed customer from randomly selected route of a parent</param>
+        /// <param name="chromosome">Parent chromosome</param>
         private static void Insert(Customer customer, Chromosome chromosome)
         {
             double min = EuclideanDistance(customer, chromosome[0]);
@@ -282,7 +304,7 @@ namespace MDVRP_ORIG
             int k = -1;
             for (int i = 0; i < chromosome[index].Count-1; i++)
             {
-                if (chromosome[index][i].IsNull == true)
+                if (chromosome[index][i].IsNull)
                 {
                     customerCost.Add(0);
                     distance.Add(0);
@@ -297,7 +319,7 @@ namespace MDVRP_ORIG
             min = -1;
             for (int i = 0; i < chromosome[index].Count-1; i++)
             {
-                if (chromosome[index][i].IsNull == true)
+                if (chromosome[index][i].IsNull)
                 {
                     k++;
                 }
@@ -321,11 +343,13 @@ namespace MDVRP_ORIG
 
             if (index2 == -1)
             {
-                Customer nullCustomer = new Customer();
-                nullCustomer.IsNull = true;
-                nullCustomer.X = chromosome[index].X;
-                nullCustomer.Y = chromosome[index].Y;
-                nullCustomer.Id = chromosome[index].Id;
+                Customer nullCustomer = new Customer
+                {
+                    IsNull = true,
+                    X = chromosome[index].X,
+                    Y = chromosome[index].Y,
+                    Id = chromosome[index].Id
+                };
                 chromosome[index].Add(customer);
                 chromosome[index].Add(nullCustomer);
             }
@@ -335,7 +359,100 @@ namespace MDVRP_ORIG
             }
 
         }
-        
+
+        // Intra-depot mutation methods
+
+
+        /// <summary>
+        /// Reversal mutation mutate a chromosome with reversing a cut in chromosome.
+        /// </summary>
+        /// <param name="chromosome">Chromosome to Mutate</param>
+        /// <returns></returns>
+        public static Chromosome ReversalMutation(Chromosome chromosome)
+        {
+            Random randomGenerator = new Random();
+            List<Customer> mutatedRoute = new List<Customer>();
+
+            int randomDepot = randomGenerator.Next(0, chromosome.ChromosomeList.Count);
+            Depot depot = new Depot();
+            depot = chromosome[randomDepot];
+
+            List<Customer> route = new List<Customer>();
+            route = MutationRoute(depot);
+            mutatedRoute = route;
+
+            int firstCut = randomGenerator.Next(0, route.Count);
+            int secondCut = randomGenerator.Next(0, route.Count);
+            while (secondCut < firstCut)
+            {
+                secondCut = randomGenerator.Next(0, route.Count);
+            }
+            
+
+            if (firstCut == secondCut) {}
+            else
+            {
+                for (int i = secondCut,k=firstCut; i >= firstCut; i--,k++)
+                {
+                    mutatedRoute[k] = route[i];
+                }
+            }
+            // TODO: I mutated a new List<Customer>. So i don't which route must be updated. So next time I Will fix it.
+
+            return null; // TODO : check this shit
+
+        }
+
+        /// <summary>
+        /// For Reversal mutation we need to get a path to cut it by two points , then replace reversed. (Part of intra-depot mutation)
+        /// </summary>
+        /// <param name="depot">The depot we want to find random route</param>
+        /// <returns>A route for reverse</returns>
+        private static List<Customer> MutationRoute(Depot depot)
+        {
+            List<Customer> route = new List<Customer>();
+
+            Random randomGenerator = new Random();
+            int customerInRouteIndex = randomGenerator.Next(0, depot.DepotCustomers.Count);
+            Customer customer = depot[customerInRouteIndex];
+            while (customer.IsNull)
+            {
+                customerInRouteIndex = randomGenerator.Next(0, depot.DepotCustomers.Count);
+                customer = depot[customerInRouteIndex];
+            }
+
+            int routeStartIndex = customerInRouteIndex;
+            for (int i = customerInRouteIndex - 1; i >= 0 ; i--)
+            {
+                Customer temp = depot[i];
+                if (!temp.IsNull)
+                {
+                    routeStartIndex = i;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            int routeEndIndex = customerInRouteIndex;
+            for (int i = customerInRouteIndex+1; i < depot.DepotCustomers.Count; i++)
+            {
+                Customer temp = depot[i];
+                if (!temp.IsNull)
+                {
+                    routeEndIndex = i;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            route = depot.DepotCustomers.GetRange(routeStartIndex, routeEndIndex);
+
+            return route;
+        }
 
     }
 }

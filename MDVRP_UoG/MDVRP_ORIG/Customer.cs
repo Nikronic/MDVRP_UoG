@@ -31,6 +31,9 @@ namespace MDVRP_ORIG
         /// </summary>
         public int Cost { get; set; } = 0;
 
+        /// <summary>
+        /// Splitting up paths with adding null customer
+        /// </summary>
         public bool IsNull { get; set; } = false;
 
     }

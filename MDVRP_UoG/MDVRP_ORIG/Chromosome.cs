@@ -14,11 +14,12 @@ namespace MDVRP_ORIG
         /// The upper level list is depots and the lower level is list of customers for each depot(upper level lists).
         /// </summary>
         public List<Depot> ChromosomeList  { get; set; }
-       
+
         /// <summary>
         /// Constructing empty base list by an input size.
         /// </summary>
-        /// <param name="depots">The number of depots for initializing base list.</param>
+        /// <param name="depots">The number of depots for initializing base list</param>
+        /// <param name="capacity">Capacity for each depot</param>
         public Chromosome(int depots ,int capacity)
         {
             ChromosomeList = new List<Depot>(depots);
