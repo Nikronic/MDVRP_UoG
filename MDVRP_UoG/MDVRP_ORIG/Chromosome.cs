@@ -26,8 +26,7 @@ namespace MDVRP_ORIG
             
             for (int i = 0; i < depots; i++)
             {
-                ChromosomeList[i] = new Depot();
-                ChromosomeList[i].Capacity = capacity;
+                ChromosomeList.Add (new Depot(0,0,0,capacity));
             }
         }
 

@@ -41,6 +41,17 @@ namespace MDVRP_ORIG
         /// </summary>
         public int Capacity { get; set; }
 
+        public Depot (int id,int x, int y, int capacity)
+        {
+            this.Id = id;
+            this.X = x;
+            this.Y = y;
+            this.Capacity = capacity;
+            this.DepotCustomers = new List<Customer>();
+        }
+
+        public Depot () { }
+
         /// <summary>
         /// Each depot has list of customers
         /// </summary>

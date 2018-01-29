@@ -36,5 +36,15 @@ namespace MDVRP_ORIG
         /// </summary>
         public bool IsNull { get; set; } = false;
 
+        public Customer (int id,int x,int y,int cost)
+        {
+            this.Id = id;
+            this.X = x;
+            this.Y = y;
+            this.Cost = cost;
+        }
+
+        public Customer () { }
+
     }
 }

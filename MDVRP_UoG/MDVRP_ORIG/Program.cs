@@ -16,10 +16,28 @@ namespace MDVRP_ORIG
             int populaitionSize = 10; //input
             int capacity = 10; //input
             int n = 100;
-            List<Customer> customer = new List<Customer>();//input
-            List<Depot> depot = new List<Depot>();//input
+
+            //List<Depot> ChromosomeList1 = new List<Depot>();
+            //ChromosomeList1[0] = new Depot();
+
+            Customer c1 = new Customer(1,3,4,5);
+            Customer c2 = new Customer(2, 6, 2, 5);
+            Customer c3 = new Customer(3, 7, 6, 4);
+            Customer c4 = new Customer(4, 2, 11, 7);
+            Customer c5 = new Customer(5, 8, 15, 1);
+            Customer c6 = new Customer(6, 11, 17, 2);
+            Customer c7 = new Customer(7, 13, 9, 80);
+
+            Depot d1 = new Depot(1,2,5,10);
+            Depot d2 = new Depot(1, 4, 7, 10);
+            Depot d3 = new Depot(1, 10, 5, 10);
+
+            List<Customer> customer = new List<Customer>() { c1, c2, c3, c4, c5, c6, c7 };//input
+            List<Depot> depot = new List<Depot>() { d1, d2, d3 };//input
 
             Chromosome chromosomeSample = GenerateChromosomeSample(depot,customer,capacity);
+            
+            // ta inja debag shode
 
             List<Chromosome> population = GeneratePopulation(populaitionSize, chromosomeSample);
 
@@ -30,6 +48,10 @@ namespace MDVRP_ORIG
                 population = GenerateNewPopulation(population);
                 //jahesh
                 CalculationFitness(population);
+                for (int j = 0; j < population.Count; j++)
+                {
+                    Console.WriteLine(population[j].Fitness);
+                }
             }
 
         }
