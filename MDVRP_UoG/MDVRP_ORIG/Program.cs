@@ -15,45 +15,80 @@ namespace MDVRP_ORIG
         {
             int populaitionSize = 10; //input
             int capacity = 10; //input
-            int n = 100;
+            int n = 1;
 
-            //List<Depot> ChromosomeList1 = new List<Depot>();
-            //ChromosomeList1[0] = new Depot();
+            Customer c1 = new Customer(1,30,40,5);
+            Customer c2 = new Customer(2, 60, 20, 5);
+            Customer c3 = new Customer(3, 70, 60, 4);
+            Customer c4 = new Customer(4, 20, 110, 7);
+            Customer c5 = new Customer(5, 80, 80, 1);
+            Customer c6 = new Customer(6, 110, 70, 2);
+            Customer c7 = new Customer(7, 130, 90, 8);
 
-            Customer c1 = new Customer(1,3,4,5);
-            Customer c2 = new Customer(2, 6, 2, 5);
-            Customer c3 = new Customer(3, 7, 6, 4);
-            Customer c4 = new Customer(4, 2, 11, 7);
-            Customer c5 = new Customer(5, 8, 15, 1);
-            Customer c6 = new Customer(6, 11, 17, 2);
-            Customer c7 = new Customer(7, 13, 9, 80);
-
-            Depot d1 = new Depot(1,2,5,10);
-            Depot d2 = new Depot(1, 4, 7, 10);
-            Depot d3 = new Depot(1, 10, 5, 10);
+            Depot d1 = new Depot(1, 20, 50, 10);
+            Depot d2 = new Depot(2, 60, 70, 10);
+            Depot d3 = new Depot(3, 120, 50, 10);
 
             List<Customer> customer = new List<Customer>() { c1, c2, c3, c4, c5, c6, c7 };//input
             List<Depot> depot = new List<Depot>() { d1, d2, d3 };//input
 
             Chromosome chromosomeSample = GenerateChromosomeSample(depot,customer,capacity);
-         
+
+            for (int j = 0; j < chromosomeSample.Count; j++)
+            {
+                for (int k = 0; k < chromosomeSample[j].Count; k++)
+                {
+                    Console.Write(chromosomeSample[j][k].Id +"  ");
+                }
+                Console.Write(" }{  ");
+            }
+            Console.WriteLine();
 
             List<Chromosome> population = GeneratePopulation(populaitionSize, chromosomeSample);
 
-            // ta inja debag shode
-
             CalculationFitness(population);
+
+            for (int i = 0; i < population.Count; i++)
+            {
+                for (int j = 0; j < population[i].Count; j++)
+                {
+                    for (int k = 0; k < population[i][j].Count; k++)
+                    {
+                        Console.Write(population[i][j][k].Id +"   ");
+                    }
+                    Console.Write(" }{  ");
+                }
+                Console.Write(population[i].Fitness + "   ");
+                Console.WriteLine();
+            }
+
+            Console.WriteLine("  ");
+            Console.WriteLine("-----");
 
             for (int i = 0; i < n; i++)
             {
                 population = GenerateNewPopulation(population);
                 //jahesh
                 CalculationFitness(population);
-                for (int j = 0; j < population.Count; j++)
+
+                for (int o = 0; o < population.Count; o++)
                 {
-                    Console.WriteLine(population[j].Fitness);
+                    for (int j = 0; j < population[o].Count; j++)
+                    {
+                        for (int k = 0; k < population[o][j].Count; k++)
+                        {
+                            Console.Write(population[o][j][k].Id + "   ");
+                        }
+                        Console.Write(" }{  ");
+                    }
+                    Console.Write(population[o].Fitness + "   ");
+                    Console.WriteLine();
                 }
+
+                Console.WriteLine("  ");
+                Console.WriteLine("-----");
             }
+            Console.ReadLine();
 
         }
 
@@ -96,6 +131,17 @@ namespace MDVRP_ORIG
                     clone[j].RandomList();
                     clone[j].Routing();
                 }
+
+                //Console.WriteLine("----");
+                //for (int j = 0; j < clone.Count; j++)
+                //{
+                //    for (int k = 0; k < clone[j].Count; k++)
+                //    {
+                //        Console.Write(clone[j][k].Id + "  ");
+                //    }
+                //}
+                //Console.WriteLine("----");
+
                 population.Add(clone);
             }
             return population;
@@ -105,9 +151,9 @@ namespace MDVRP_ORIG
         {
             for (int k = 0; k < populaitionList.Count; k++)
             {
-                double distance = 0;
+                double distance = Functions.EuclideanDistance(populaitionList[k][0][0],populaitionList[k][0]);
                 double route = 0;
-                for (int i = 0; i < populaitionList.Count; i++)
+                for (int i = 0; i < populaitionList[k].Count; i++)
                 {
                     for (int j = 0; j < populaitionList[k][i].Count - 1; j++)
                     {
@@ -118,7 +164,7 @@ namespace MDVRP_ORIG
                         distance += Functions.EuclideanDistance(populaitionList[k][i][j], populaitionList[k][i][j + 1]);
                     }
                 }
-                populaitionList[k].Fitness = ((100 * route) + ((0.001f) * distance));
+                populaitionList[k].Fitness = ((100 * route) + ( distance));
             }
         }
 

@@ -43,8 +43,13 @@ namespace MDVRP_ORIG
         public static void Routing(this Depot depot)
         {
             int weight = 0;
-            Customer nullCustomer = new Customer(0,0,0,0);
-            nullCustomer.IsNull = true;
+            Customer nullCustomer = new Customer
+            {
+                Id = 0,
+                X = depot.X,
+                Y = depot.Y,
+                IsNull = true
+            };
             for (int i = 0; i < depot.Count; i++)
             {               
                 if (weight + depot[i].Cost > depot.Capacity)
@@ -131,11 +136,11 @@ namespace MDVRP_ORIG
             {
                 // typically we are selecting both chromosomes in tournament set (binary tournament)
                 int randomChromosome = random.Next(0, tournamentSet.Count);
-                Chromosome firstChromosome = new Chromosome(-1,-1);
+                Chromosome firstChromosome = new Chromosome(0,0);
                 firstChromosome = tournamentSet[randomChromosome];
 
                 int randomChromosome2 = random.Next(0, tournamentSet.Count);
-                Chromosome secondChromosome = new Chromosome(-1, -1);
+                Chromosome secondChromosome = new Chromosome(0, 0);
                 secondChromosome = tournamentSet[randomChromosome2];
 
                 // output to crossover
@@ -221,7 +226,7 @@ namespace MDVRP_ORIG
         {
             List<Customer> deletedRoute = new List<Customer>();
             Random random = new Random();
-            int d = random.Next(chromosome.Count + 1);
+            int d = random.Next(chromosome.Count);
             int r = random.Next(chromosome[d].Count);
 
             int i;
@@ -234,7 +239,7 @@ namespace MDVRP_ORIG
                     i++;
                 }
                 i = r - 1;
-                while (chromosome[d][i].IsNull == false)
+                while (i != -1 && chromosome[d][i].IsNull == false)
                 {
                     deletedRoute.Add(chromosome[d][i]);
                     i--;
@@ -242,11 +247,11 @@ namespace MDVRP_ORIG
             }
             else
             {
-                i = r + 1;
-                while (chromosome[d][i].IsNull == false)
+                i = r - 1;
+                while (i != -1 && chromosome[d][i].IsNull == false )
                 {
                     deletedRoute.Add(chromosome[d][i]);
-                    i++;
+                    i--;
                 }
             }
             return deletedRoute;
@@ -299,7 +304,12 @@ namespace MDVRP_ORIG
             }
             List<double> distance = new List<double>();
             List<int> customerCost = new List<int>();
-            int k = -1;
+
+            int k = 0;
+            customerCost.Add(0);
+            distance.Add(EuclideanDistance(chromosome[index][0], chromosome[index]));
+
+
             for (int i = 0; i < chromosome[index].Count-1; i++)
             {
                 if (chromosome[index][i].IsNull)
@@ -312,9 +322,17 @@ namespace MDVRP_ORIG
                 distance[k] += EuclideanDistance(chromosome[index][i], chromosome[index][i + 1]);
             }
 
-            k = -1;
+            k = 0;
             int index2 = -1;
             min = -1;
+            if (customerCost[k] + customer.Cost < chromosome[index].Capacity)
+            {
+                double t1 = EuclideanDistance(chromosome[index][0], chromosome[index]);
+                double t2 = EuclideanDistance(chromosome[index][0], customer) + EuclideanDistance(customer, chromosome[index]);
+                double t3 = distance[k] - t1 + t2;
+                min = t3;
+                index2 = 0;
+            }
             for (int i = 0; i < chromosome[index].Count-1; i++)
             {
                 if (chromosome[index][i].IsNull)
@@ -329,12 +347,12 @@ namespace MDVRP_ORIG
                     if (min == -1)
                     {
                         min = t3;
-                        index2 = i;
+                        index2 = i+1;
                     }
                     else if (min > t3)
                     {
                         min = t3;
-                        index2 = i;
+                        index2 = i+1;
                     }
                 }
             }
@@ -346,14 +364,14 @@ namespace MDVRP_ORIG
                     IsNull = true,
                     X = chromosome[index].X,
                     Y = chromosome[index].Y,
-                    Id = chromosome[index].Id
+                    Id = 0
                 };
                 chromosome[index].Add(customer);
                 chromosome[index].Add(nullCustomer);
             }
             else
             {
-                chromosome[index2].Insert(index2 + 1, customer);
+                chromosome[index].Insert(index2 , customer);
             }
 
         }
