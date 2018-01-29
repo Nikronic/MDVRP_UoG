@@ -43,17 +43,15 @@ namespace MDVRP_ORIG
         public static void Routing(this Depot depot)
         {
             int weight = 0;
-            Customer nullCustomer = new Customer();
+            Customer nullCustomer = new Customer(0,0,0,0);
+            nullCustomer.IsNull = true;
             for (int i = 0; i < depot.Count; i++)
             {               
                 if (weight + depot[i].Cost > depot.Capacity)
                 {
                     depot.Insert(i, nullCustomer);
-                    nullCustomer.IsNull = true;
-                    nullCustomer.X = depot[i].X;
-                    nullCustomer.Y = depot[i].Y;
-                    nullCustomer.Id = depot[i].Id;
                     weight = 0;
+                    i++;
                 }
                 weight += depot[i].Cost;
             }
@@ -69,7 +67,7 @@ namespace MDVRP_ORIG
             var random = new Random();
             for (int i = 0; i < depot.Count; i++)
             {
-                int ran = random.Next(i-1,depot.Count);
+                int ran = random.Next(i,depot.Count);
                 Customer temp = depot[i];
                 depot[i] = depot[ran];
                 depot[ran] = temp;

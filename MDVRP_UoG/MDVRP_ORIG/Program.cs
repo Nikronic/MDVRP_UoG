@@ -36,10 +36,11 @@ namespace MDVRP_ORIG
             List<Depot> depot = new List<Depot>() { d1, d2, d3 };//input
 
             Chromosome chromosomeSample = GenerateChromosomeSample(depot,customer,capacity);
-            
-            // ta inja debag shode
+         
 
             List<Chromosome> population = GeneratePopulation(populaitionSize, chromosomeSample);
+
+            // ta inja debag shode
 
             CalculationFitness(population);
 
