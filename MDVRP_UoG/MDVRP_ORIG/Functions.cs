@@ -11,6 +11,11 @@ namespace MDVRP_ORIG
     public static class Functions
     {
 
+
+        // some field for mutation
+        private static int mutationRouteStartIndex = 0;
+        private static int mutationRouteEndIndex = 0;
+
         /// <summary>
         /// Compute the Euclidean distance between two customers to group them to the depots.
         /// </summary>
@@ -392,11 +397,11 @@ namespace MDVRP_ORIG
 
 
         /// <summary>
-        /// Reversal mutation mutate a chromosome with reversing a cut in chromosome.
+        /// Reversal mutation mutate a chromosome with reversing a cut in chromosome in place.
         /// </summary>
         /// <param name="chromosome">Chromosome to Mutate</param>
         /// <returns></returns>
-        public static Chromosome ReversalMutation(Chromosome chromosome)
+        public static void ReversalMutation(this Chromosome chromosome)
         {
             Random randomGenerator = new Random();
             List<Customer> mutatedRoute = new List<Customer>();
@@ -425,10 +430,11 @@ namespace MDVRP_ORIG
                     mutatedRoute[k] = route[i];
                 }
             }
-            // TODO: I mutated a new List<Customer>. So i don't which route must be updated. So next time I Will fix it.
 
-            return null; // TODO : check this shit
-
+            for (int i = mutationRouteStartIndex; i < mutationRouteEndIndex; i++)
+            {
+                chromosome[randomDepot][i] = mutatedRoute[i];
+            }
         }
 
         /// <summary>
@@ -479,7 +485,64 @@ namespace MDVRP_ORIG
 
             route = depot.DepotCustomers.GetRange(routeStartIndex, routeEndIndex);
 
+            mutationRouteStartIndex = routeStartIndex;
+            mutationRouteEndIndex = routeEndIndex;
+
             return route;
+        }
+
+
+        /// <summary>
+        /// We remove a randomly selected customer and insert it again in best feasible route. (part of intra-depot mutation)
+        /// </summary>
+        /// <param name="chromosome">Chromosome to mutate</param>
+        public static void SingleCustomerReRoutingMutation(Chromosome chromosome)
+        {
+            Random random = new Random();
+            int randomDepot = random.Next(0, chromosome.Count);
+            int randomCustomer = random.Next(0, chromosome[randomDepot].Count);
+            Customer customer = chromosome[randomDepot][randomCustomer]; // this customer will be removed and inserted in best feasible place.
+
+            Insert(customer, chromosome); // inserted.
+        }
+
+        /// <summary>
+        /// Selects two random routes and swaps one randomly chosen customer from one route to another. (part of intra-depot mutation)
+        /// </summary>
+        /// <param name="chromosome">Chromosome to mutate</param>
+        public static void SwappingMutation(Chromosome chromosome)
+        {
+            Random random = new Random();
+            int firstRandomDepot = random.Next(0, chromosome.Count);
+            int secondRandomDepot = random.Next(0, chromosome.Count);
+            while(firstRandomDepot == secondRandomDepot)
+            {
+                secondRandomDepot = random.Next(0, chromosome.Count);
+            }
+
+            List<Customer> firstRoute = MutationRoute(chromosome[firstRandomDepot]); // first random route to choose random customer
+            List<Customer> secondRoute = MutationRoute(chromosome[secondRandomDepot]); // second random route to choose random customer
+
+            int firstRandomCustomer = random.Next(0, firstRoute.Count); 
+            int secondRandomCustomer = random.Next(0, secondRoute.Count); 
+
+            Customer firstCustomer = firstRoute[firstRandomCustomer]; // first customer to replace
+            Customer secondCustomer = secondRoute[secondRandomCustomer]; // second customer to replace
+
+            
+        }
+
+        /// <summary>
+        /// Swap to selected customer (part of intra-depot mutation)
+        /// </summary>
+        /// <param name="customer1">To be replaced with customer2</param>
+        /// <param name="customer2">To be replaced with customer1</param>
+        private static void SwapCustomers(Chromosome chromosome, Customer customer1, Customer customer2)
+        {
+            for (int i = 0; i < ; i++)
+            {
+
+            }
         }
 
     }
