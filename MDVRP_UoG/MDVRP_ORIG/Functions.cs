@@ -269,19 +269,27 @@ namespace MDVRP_ORIG
         /// <param name="chromosome">The parent chromosome</param>
         private static void DeletingRoute(List<Customer> route, Chromosome chromosome)
         {
-            for (int i = 0; i < chromosome.Count; i++)
+            for (int i = 0; i < route.Count; i++)
             {
-                for (int j = 1; j < chromosome[i].Count - 1; j++)
+                for (int j = 0; j < chromosome.Count; j++)
                 {
-                    for (int k = 0; k < route.Count; k++)
+                    for (int k = 0; k < chromosome[j].Count; k++)
                     {
-                        if (chromosome[i][j] == route[k])
+                        if (chromosome[j][k] == route[i])
                         {
-                            chromosome[i].RemoveAt(j);
-                            if (chromosome[i][j].IsNull && chromosome[i][j - 1].IsNull)
+                            chromosome[j].RemoveAt(k);
+                            if(chromosome[j][k].Id == 0 )
                             {
-                                chromosome[i].RemoveAt(j);
+                                if ( k == 0)
+                                {
+                                    chromosome[j].RemoveAt(0);
+                                }
+                                else if(chromosome[j][k-1].Id == 0)
+                                {
+                                    chromosome[j].RemoveAt(k);
+                                }
                             }
+                            
                             break;
                         }
                     }
@@ -312,8 +320,11 @@ namespace MDVRP_ORIG
 
             int k = 0;
             customerCost.Add(0);
-            distance.Add(EuclideanDistance(chromosome[index][0], chromosome[index]));
-
+            if (chromosome[index].Count != 0)
+            {
+                distance.Add(EuclideanDistance(chromosome[index][0], chromosome[index]));
+            }
+            
 
             for (int i = 0; i < chromosome[index].Count-1; i++)
             {
@@ -330,13 +341,14 @@ namespace MDVRP_ORIG
             k = 0;
             int index2 = -1;
             min = -1;
-            if (customerCost[k] + customer.Cost < chromosome[index].Capacity)
+            if ( chromosome[index].Count != 0 && customerCost[k] + customer.Cost <= chromosome[index].Capacity)
             {
                 double t1 = EuclideanDistance(chromosome[index][0], chromosome[index]);
                 double t2 = EuclideanDistance(chromosome[index][0], customer) + EuclideanDistance(customer, chromosome[index]);
                 double t3 = distance[k] - t1 + t2;
                 min = t3;
                 index2 = 0;
+                               
             }
             for (int i = 0; i < chromosome[index].Count-1; i++)
             {
@@ -344,7 +356,7 @@ namespace MDVRP_ORIG
                 {
                     k++;
                 }
-                if ( customerCost[k] + customer.Cost < chromosome[index].Capacity)
+                if ( customerCost[k] + customer.Cost <= chromosome[index].Capacity)
                 {
                     double t1 = EuclideanDistance(chromosome[index][i], chromosome[index][i + 1]);
                     double t2 = EuclideanDistance(chromosome[index][i], customer) + EuclideanDistance(customer, chromosome[index][i + 1]);
