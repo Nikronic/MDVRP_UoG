@@ -15,7 +15,7 @@ namespace MDVRP_ORIG
         {
             int populaitionSize = 10; //input
             int capacity = 10; //input
-            int n = 1;
+            int n = 300;
 
             Customer c1 = new Customer(1,30,40,5);
             Customer c2 = new Customer(2, 60, 20, 5);
@@ -26,11 +26,10 @@ namespace MDVRP_ORIG
             Customer c7 = new Customer(7, 130, 90, 8);
 
             Depot d1 = new Depot(1, 20, 50, 10);
-            Depot d2 = new Depot(2, 60, 70, 10);
-            Depot d3 = new Depot(3, 120, 50, 10);
+            Depot d3 = new Depot(2, 120, 50, 10);
 
             List<Customer> customer = new List<Customer>() { c1, c2, c3, c4, c5, c6, c7 };//input
-            List<Depot> depot = new List<Depot>() { d1, d2, d3 };//input
+            List<Depot> depot = new List<Depot>() { d1, d3 };//input
 
             Chromosome chromosomeSample = GenerateChromosomeSample(depot,customer,capacity);
 
@@ -132,15 +131,15 @@ namespace MDVRP_ORIG
                     clone[j].Routing();
                 }
 
-                //Console.WriteLine("----");
-                //for (int j = 0; j < clone.Count; j++)
-                //{
-                //    for (int k = 0; k < clone[j].Count; k++)
-                //    {
-                //        Console.Write(clone[j][k].Id + "  ");
-                //    }
-                //}
-                //Console.WriteLine("----");
+                Console.WriteLine("----");
+                for (int j = 0; j < clone.Count; j++)
+                {
+                    for (int k = 0; k < clone[j].Count; k++)
+                    {
+                        Console.Write(clone[j][k].Id + "  ");
+                    }
+                }
+                Console.WriteLine("----");
 
                 population.Add(clone);
             }
