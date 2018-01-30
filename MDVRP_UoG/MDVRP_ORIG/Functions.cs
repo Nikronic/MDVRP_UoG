@@ -273,10 +273,18 @@ namespace MDVRP_ORIG
                         if (chromosome[j][k] == route[i])
                         {
                             chromosome[j].RemoveAt(k);
-                            if (chromosome[j].Count == 1)
+                            if(chromosome[j][k].Id == 0 )
                             {
-                                chromosome[j].RemoveAt(0);
+                                if ( k == 0)
+                                {
+                                    chromosome[j].RemoveAt(0);
+                                }
+                                else if(chromosome[j][k-1].Id == 0)
+                                {
+                                    chromosome[j].RemoveAt(k);
+                                }
                             }
+                            
                             break;
                         }
                     }

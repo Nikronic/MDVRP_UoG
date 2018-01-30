@@ -15,21 +15,40 @@ namespace MDVRP_ORIG
         {
             int populaitionSize = 10; //input
             int capacity = 10; //input
-            int n = 300;
+            int n = 500;
 
             Customer c1 = new Customer(1,30,40,5);
             Customer c2 = new Customer(2, 60, 20, 5);
             Customer c3 = new Customer(3, 70, 60, 4);
-            Customer c4 = new Customer(4, 20, 110, 7);
+            Customer c4 = new Customer(4, 10, 110, 7);
             Customer c5 = new Customer(5, 80, 80, 1);
-            Customer c6 = new Customer(6, 110, 70, 2);
+            Customer c6 = new Customer(6, 110, 60, 2);
             Customer c7 = new Customer(7, 130, 90, 8);
 
             Depot d1 = new Depot(1, 20, 50, 10);
-            Depot d3 = new Depot(2, 120, 50, 10);
+            Depot d2 = new Depot(2, 120, 50, 10);
 
             List<Customer> customer = new List<Customer>() { c1, c2, c3, c4, c5, c6, c7 };//input
-            List<Depot> depot = new List<Depot>() { d1, d3 };//input
+            List<Depot> depot = new List<Depot>() { d1, d2 };//input
+
+            //------------------------
+            for (int i = 0; i < customer.Count; i++)
+            {
+                for (int j = 0; j < depot.Count; j++)
+                {
+                    Console.WriteLine(customer[i].Id + " - " + depot[j].Id + " = " + Functions.EuclideanDistance(customer[i], depot[j]));
+                }
+            }
+            Console.WriteLine("  -------   ");
+            for (int i = 0; i < customer.Count; i++)
+            {
+                for (int j = 0; j < customer.Count; j++)
+                {
+                    Console.WriteLine(customer[i].Id + " - " + customer[j].Id + " = " + Functions.EuclideanDistance(customer[i], customer[j]));
+                }
+            }
+            Console.WriteLine("-----");
+            //------------------------
 
             Chromosome chromosomeSample = GenerateChromosomeSample(depot,customer,capacity);
 
@@ -39,7 +58,7 @@ namespace MDVRP_ORIG
                 {
                     Console.Write(chromosomeSample[j][k].Id +"  ");
                 }
-                Console.Write(" }{  ");
+                Console.Write(" }{ ");
             }
             Console.WriteLine();
 
@@ -150,20 +169,29 @@ namespace MDVRP_ORIG
         {
             for (int k = 0; k < populaitionList.Count; k++)
             {
-                double distance = Functions.EuclideanDistance(populaitionList[k][0][0],populaitionList[k][0]);
                 double route = 0;
+                double distance = 0;
+
                 for (int i = 0; i < populaitionList[k].Count; i++)
                 {
-                    for (int j = 0; j < populaitionList[k][i].Count - 1; j++)
+                    if (populaitionList[k][i].Count != 0)
+                    {
+                        distance += Functions.EuclideanDistance(populaitionList[k][i][0], populaitionList[k][i]);
+                    }
+                    
+                    for (int j = 0; j < populaitionList[k][i].Count; j++)
                     {
                         if (populaitionList[k][i][j].IsNull == true)
                         {
                             route = route + 1;
                         }
-                        distance += Functions.EuclideanDistance(populaitionList[k][i][j], populaitionList[k][i][j + 1]);
+                        if (j+1 != populaitionList[k][i].Count)
+                        {
+                            distance += Functions.EuclideanDistance(populaitionList[k][i][j], populaitionList[k][i][j + 1]);
+                        }
                     }
                 }
-                populaitionList[k].Fitness = ((100 * route) + ( distance));
+                populaitionList[k].Fitness = ((route*100) + (distance));
             }
         }
 
