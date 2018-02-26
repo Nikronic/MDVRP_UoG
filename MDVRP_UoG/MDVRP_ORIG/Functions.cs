@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Runtime.ExceptionServices;
 using System.Threading;
-
+using System.Xml.Linq;
+using Excel = Microsoft.Office.Interop.Excel;
 
 // ReSharper disable InvertIf
 
@@ -13,8 +14,8 @@ namespace MDVRP_ORIG
 
 
         // some field for mutation
-        private static int mutationRouteStartIndex = 0;
-        private static int mutationRouteEndIndex = 0;
+        private static int _mutationRouteStartIndex = 0;
+        private static int _mutationRouteEndIndex = 0;
 
         /// <summary>
         /// Compute the Euclidean distance between two customers to group them to the depots.
@@ -431,7 +432,7 @@ namespace MDVRP_ORIG
                 }
             }
 
-            for (int i = mutationRouteStartIndex; i < mutationRouteEndIndex; i++)
+            for (int i = _mutationRouteStartIndex; i < _mutationRouteEndIndex; i++)
             {
                 chromosome[randomDepot][i] = mutatedRoute[i];
             }
@@ -485,8 +486,8 @@ namespace MDVRP_ORIG
 
             route = depot.DepotCustomers.GetRange(routeStartIndex, routeEndIndex);
 
-            mutationRouteStartIndex = routeStartIndex;
-            mutationRouteEndIndex = routeEndIndex;
+            _mutationRouteStartIndex = routeStartIndex;
+            _mutationRouteEndIndex = routeEndIndex;
 
             return route;
         }
@@ -537,12 +538,17 @@ namespace MDVRP_ORIG
         /// </summary>
         /// <param name="customer1">To be replaced with customer2</param>
         /// <param name="customer2">To be replaced with customer1</param>
-        private static void SwapCustomers(Chromosome chromosome, Customer customer1, Customer customer2)
-        {
-            for (int i = 0; i < ; i++)
-            {
+        //private static void SwapCustomers(Chromosome chromosome, Customer customer1, Customer customer2)
+        //{
+        //    for (int i = 0; i < ; i++)
+        //    {
 
-            }
+        //    }
+        //}
+
+        public static void SaveDataAsExcel(string sheetName, int row, int column, string data)
+        {
+
         }
 
     }

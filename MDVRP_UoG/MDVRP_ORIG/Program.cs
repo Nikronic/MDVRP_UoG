@@ -17,6 +17,8 @@ namespace MDVRP_ORIG
             int capacity = 80; //input
             int n = 1800;
 
+            //Functions.SaveDataAsExcel("test",1,1,"Shit down");
+
             Customer c1 = new Customer(1,37,52,7);
             Customer c2 = new Customer(2, 49, 49, 30);
             Customer c3 = new Customer(3, 52, 64, 16);
@@ -73,7 +75,9 @@ namespace MDVRP_ORIG
             Depot d3 = new Depot(3, 50, 30, capacity);
             Depot d4 = new Depot(4, 60, 50, capacity);
 
-            List<Customer> customer = new List<Customer>() { c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16, c17, c18, c19, c20, c21, c22, c23, c24, c25, c26, c27, c28, c29, c30, c31, c32, c33, c34, c35, c36, c37, c38, c39, c40, c41, c42, c43, c44, c45, c46, c47, c48, c49, c50 };//input
+            List<Customer> customer = new List<Customer>() { c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15,
+                c16, c17, c18, c19, c20, c21, c22, c23, c24, c25, c26, c27, c28, c29, c30, c31, c32, c33, c34, c35,
+                c36, c37, c38, c39, c40, c41, c42, c43, c44, c45, c46, c47, c48, c49, c50 };//input
             List<Depot> depot = new List<Depot>() { d1, d2, d3, d4};//input
 
             //------------------------
@@ -151,6 +155,8 @@ namespace MDVRP_ORIG
                 Console.WriteLine("  ");
                 Console.WriteLine("-----");
             }
+
+            
             Console.ReadLine();
 
         }
@@ -266,6 +272,6 @@ namespace MDVRP_ORIG
             }
             return newPop;
         }
-        
+
     }
 }
